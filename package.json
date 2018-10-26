@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Team-Ticketer/Grape-Server/issues"
   },
-  "homepage": "https://github.com/Team-Ticketer/Grape-Server#readme"
+  "homepage": "https://github.com/Team-Ticketer/Grape-Server#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.3.6"
+  }
 }
