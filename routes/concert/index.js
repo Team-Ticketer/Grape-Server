@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.post('/', upload.fields([]), ctrl.postConert)
+router.post('/', upload.fields([]), ctrl.postConcert)
   .get('/', ctrl.getConcertList)
   .get('/:id', ctrl.getConcertDetail);
 
