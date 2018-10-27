@@ -13,8 +13,17 @@ const Concert = new mongoose.Schema({
   lng: Number,
   startDate: Date,
   endDate: Date,
-  ownerName: String,
-  price: Array,
+  owner: {
+    name: String,
+    email: String,
+    description: String,
+  },
+  tickets: [{
+    name: String,
+    description: String,
+    amount: String,
+    price: Number,
+  }],
 });
 
 module.exports = mongoose.model('Concert', Concert);
