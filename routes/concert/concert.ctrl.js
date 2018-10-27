@@ -42,7 +42,10 @@ const postConcert = async function postConcert(req, res) {
 
   newConcert.save()
     .then(() => res.status(201).json({ result: 'OK' }))
-    .catch(() => res.status(500).json({ result: 'BAD' }));
+    .catch((e) => {
+      console.log(e);
+      res.status(500).json({ result: 'BAD' });
+    });
 };
 
 const getConcertList = async function getConcertList(req, res) {
