@@ -18,11 +18,10 @@ const postConcert = async function postConcert(req, res) {
       fields: 'name',
     },
   })).data;
-  console.log(address);
   const newConcert = new Concert({
     contract,
     name,
-    placeName: place.candidates ? place.candidates[0].name : null,
+    placeName: place.candidates[0] ? place.candidates[0].name : null,
     artist,
     content,
     video,
@@ -50,7 +49,7 @@ const postConcert = async function postConcert(req, res) {
 
 const getConcertList = async function getConcertList(req, res) {
   const query = {};
-  for (let k in req.query) query[k] = new RegExp(req.query[k], 'i');
+  for (const k in req.query) query[k] = new RegExp(req.query[k], 'i');
   // lte and gte 사용해서 $date 비교하기
   console.log(query);
   const concerts = await Concert.find(query, 'picture name startDate endDate minPrice maxPrice');
