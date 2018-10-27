@@ -10,6 +10,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 app
   .use(bodyparser.json())
   .use(bodyparser.urlencoded({ extended: true }))
+  .use(express.static('./public'))
   .use('/', require('./routes'))
   .get('/', (req, res) => res.status(200).send('<h1>Grape!</h1>'))
   .listen(process.env.PORT || 8080);

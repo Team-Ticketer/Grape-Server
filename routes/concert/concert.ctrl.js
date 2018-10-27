@@ -3,11 +3,11 @@ const Concert = require('../../models/Concert');
 
 const postConcert = async function postConcert(req, res) {
   const {
-    contract, artist, content, video, address, lat, lng, term, ownerName, price,
+    contract, name, artist, content, video, address,
+    lat, lng, startDate, endDate, ownerName, ownerEmail, ownerDes, tickets,
   } = req.body;
 
-  // TODO: address로 place api 요청 보내기
-  const place = await axios({
+  const place = (await axios({
     method: 'get',
     url: 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json',
     params: {
@@ -17,21 +17,27 @@ const postConcert = async function postConcert(req, res) {
       language: 'ko',
       fields: 'name',
     },
-  });
-  console.log(place);
+  })).data;
+  console.log(address);
   const newConcert = new Concert({
     contract,
-    name: place.name,
+    name,
+    placeName: place.candidates ? place.candidates[0].name : null,
     artist,
     content,
     video,
-    picture: `${req.protocol}://${req.hostname}/${req.files.picture[0].path}`,
+    picture: `${req.protocol}://${req.hostname}/public/uploads/${req.files[0].filename}`,
     address,
     lat,
     lng,
-    term,
-    ownerName,
-    price,
+    startDate,
+    endDate,
+    owner: {
+      name: ownerName,
+      email: ownerEmail,
+      description: ownerDes,
+    },
+    tickets: JSON.parse(tickets),
   });
 
   newConcert.save()
@@ -40,7 +46,11 @@ const postConcert = async function postConcert(req, res) {
 };
 
 const getConcertList = async function getConcertList(req, res) {
-  const concerts = await Concert.find({}, 'picture name startDate endDate minPrice maxPrice');
+  const query = {};
+  for (let k in req.query) query[k] = new RegExp(req.query[k], 'i');
+  // lte and gte 사용해서 $date 비교하기
+  console.log(query);
+  const concerts = await Concert.find(query, 'picture name startDate endDate minPrice maxPrice');
   res.status(200).json(concerts);
 };
 

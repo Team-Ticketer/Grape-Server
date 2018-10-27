@@ -21,7 +21,7 @@ const Concert = new mongoose.Schema({
   tickets: [{
     name: String,
     description: String,
-    amount: String,
+    amount: Number,
     price: Number,
   }],
 });
