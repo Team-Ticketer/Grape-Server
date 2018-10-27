@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const ctrl = require('./ticket.ctrl');
 
-router.get('/', )
+router.get('/', ctrl.getTicketList)
+  .post('/', ctrl.buyTicket);
 
 module.exports = router;
