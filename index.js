@@ -1,10 +1,15 @@
 const express = require('express');
+const bodyparser = require('body-parser');
 const mongoose = require('mongoose');
 
 const app = express();
 
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 
-app.get('/', (req, res) => res.status(200).send('<h1>Grape!</h1>'))
+app
+  .use(bodyparser.json())
+  .use(bodyparser.urlencoded({ extended: true }))
   .use('/', require('./routes'))
-  .listen(8080);
+  .get('/', (req, res) => res.status(200).send('<h1>Grape!</h1>'))
+  .listen(process.env.PORT || 8080);
