@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Ticket = mongoose.Schema({
-  ticketId: String,
+  encryptedTicket: String,
   concertId: String,
   ticketName: String,
   walletAddress: String,

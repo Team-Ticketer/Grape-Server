@@ -1,12 +1,12 @@
-const crypto = require('crypto');
 const Concert = require('../../models/Concert');
 const Ticket = require('../../models/Ticket');
 
 const buyTicket = function buyTicketWithWallet(req, res) {
-  const { transactionId } = req.query;
-  const [concertId, ticketName, walletAddress] = transactionId.split('.');
+  const {
+    encryptedTicket, ticketName, concertId, walletAddress,
+  } = req.body;
   const newTicket = new Ticket({
-    ticketId: crypto.pbkdf2Sync(`${concertId}.${ticketName}.${walletAddress}`, process.env.SALT, 100, 100, 'sha512').toString('base64'),
+    encryptedTicket,
     concertId,
     ticketName,
     walletAddress,
@@ -25,7 +25,28 @@ const getTicketList = async function getTicketListWithWallet(req, res) {
   res.status(200).json(tickets);
 };
 
+const getTicketDetail = async function getTicketDetailWithId(req, res) {
+  const { id } = req.params;
+  const ticket = Ticket.findById(id, 'ticketName concertId');
+  const concert = Concert.findOne({ contract: ticket.concertId });
+  res.status(200).json({
+    name: concert.name,
+    ticketName: ticket.ticketName,
+    date: concert.startDate,
+    placeName: concert.placeName,
+  });
+};
+
+const checkTicket = async function checkTicketWithGreateAwesomeWonjunsAlgorithm(req, res) {
+  const { encryptedTicket } = req.query;
+  const ticket = await Ticket.findOne(encryptedTicket);
+  if (ticket) res.status(200).json({ result: 'OK' });
+  else res.status(403).json({ result: 'BAD' });
+};
+
 module.exports = {
   buyTicket,
+  getTicketDetail,
   getTicketList,
+  checkTicket,
 };
