@@ -5,13 +5,13 @@ const Concert = new mongoose.Schema({
   name: String,
   content: String,
   picture: String,
+  placeName: String,
   lat: Number,
   lng: Number,
   startDate: Date,
   endDate: Date,
   ownerName: String,
-  minPrice: Number,
-  maxPrice: Number,
+  price: Array,
 });
 
 module.exports = mongoose.model('Concert', Concert);
