@@ -36,7 +36,7 @@ const postConcert = async function postConcert(req, res) {
 
   newConcert.save()
     .then(() => res.status(201).json({ result: 'OK' }))
-    .catch(() => res.status(500).json({ result: '' }));
+    .catch(() => res.status(500).json({ result: 'BAD' }));
 };
 
 const getConcertList = async function getConcertList(req, res) {
@@ -50,7 +50,7 @@ const getConcertDetail = async function getConcertDetail(req, res) {
   res.status(200).json(concert);
 };
 
-exports = {
+module.exports = {
   postConcert,
   getConcertList,
   getConcertDetail,
