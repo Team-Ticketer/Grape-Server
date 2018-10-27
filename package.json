@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/Team-Ticketer/Grape-Server#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "mongoose": "^5.3.6"
+    "mongoose": "^5.3.6",
+    "multer": "^1.4.1"
   },
   "devDependencies": {
     "eslint": "^5.7.0",
