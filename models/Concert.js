@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const Concert = new mongoose.Schema({
   contract: String,
   name: String,
+  artist: String,
   content: String,
+  video: String,
   picture: String,
   placeName: String,
   lat: Number,
