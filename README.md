@@ -25,7 +25,9 @@
 #### Response
 - 200
   - Description: 성공
-  - Response: [테스트하기](https://grape-server.herokuapp.com/concert)
+  - Response:
+    - picture name startDate endDate minPrice maxPrice
+  - Test: [테스트하기](https://grape-server.herokuapp.com/concert)
 
 ### GET /concert/:id
 
@@ -42,4 +44,8 @@
 #### Response
 - 200
   - Description: 성공
-  - Response: [테스트하기](https://grape-server.herokuapp.com/concert/test)
+  - Response:
+    - name artist content video picture address placeName lat lng startDate endDate *owner*: Object *tickets*: Object Array
+    - owner: { name, email, description }
+    - tickets: [{ name, description, amount, price }]
+  - Test: [테스트하기](https://grape-server.herokuapp.com/concert/test)
