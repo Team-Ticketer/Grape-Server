@@ -49,9 +49,12 @@ const postConcert = async function postConcert(req, res) {
 
 const getConcertList = async function getConcertList(req, res) {
   const query = {};
-  for (const k in req.query) query[k] = new RegExp(req.query[k], 'i');
+
   // lte and gte 사용해서 $date 비교하기
-  console.log(query);
+  Object.keys(req.query).forEach((k) => {
+    query[k] = new RegExp(req.query[k], 'i');
+  });
+
   const concerts = await Concert.find(query, 'picture name startDate endDate minPrice maxPrice');
   res.status(200).json(concerts);
 };
