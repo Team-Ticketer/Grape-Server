@@ -26,7 +26,7 @@
 - 200
   - Description: 성공
   - Response:
-    - picture name startDate endDate minPrice maxPrice
+    - _id picture name startDate endDate minPrice maxPrice
   - Test: [테스트하기](https://grape-server.herokuapp.com/concert)
 
 ### GET /concert/:id
