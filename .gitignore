@@ -1,3 +1,11 @@
+# node modules
 node_modules/
+
+# sensitive info
 .env
+
+# uploaded files
 public/uploads/*.png
+
+# setting files
+.vscode
