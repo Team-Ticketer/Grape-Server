@@ -14,7 +14,7 @@ const checkWallet = function checkWalletWithKaKaoId(req, res) {
     })
     .catch((e) => {
       console.log(e);
-      res.status(500).json({ result: 'failure' });
+      res.status(500).json({ result: 'BAD' });
     });
 };
 
@@ -27,7 +27,7 @@ const registerWallet = async function registerWalletWithId(req, res) {
   const { kakaoId, name, walletId } = req.body;
   const u = await User.findOne({ walletId });
 
-  if (u) res.status(400).json({ result: 'failure', msg: 'Already Exist!' });
+  if (u) res.status(400).json({ result: 'BAD', msg: 'Already Exist!' });
   else {
     const newUser = await (User({ kakaoId, name, walletId }).save());
     console.log(newUser);

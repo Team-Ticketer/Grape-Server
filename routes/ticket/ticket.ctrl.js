@@ -15,6 +15,9 @@ const registerOwner = function registerOwnerWithWalletId(req, res) {
     Ticket.findOneAndUpdate({ walletId }, { $push: { tickets: concertId } }),
   ]).then(() => {
     res.status(201).json({ result: 'OK' });
+  }).catch((e) => {
+    console.log(e);
+    res.status(500).json({ result: 'BAD' });
   });
 };
 
