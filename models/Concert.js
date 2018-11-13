@@ -7,6 +7,7 @@ const Concert = new mongoose.Schema({
   content: String,
   video: String,
   picture: String,
+  poster: String,
   address: String,
   placeName: String,
   lat: Number,

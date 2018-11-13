@@ -26,6 +26,7 @@ const postConcert = async function postConcert(req, res) {
     content,
     video,
     picture: `${req.protocol}://${req.hostname}/public/uploads/${req.files[0].filename}`,
+    poster: `${req.protocol}://${req.hostname}/public/uploads/${req.files[1].filename}`,
     address,
     lat,
     lng,
@@ -55,13 +56,13 @@ const getConcertList = async function getConcertList(req, res) {
     query[k] = new RegExp(req.query[k], 'i');
   });
 
-  const concerts = await Concert.find(query, 'picture name startDate endDate minPrice maxPrice');
+  const concerts = await Concert.find(query, 'poster name startDate endDate minPrice maxPrice');
   res.status(200).json(concerts);
 };
 
 const getConcertDetail = async function getConcertDetail(req, res) {
   const { id } = req.params;
-  const concert = await Concert.findById(id);
+  const concert = await Concert.findById(id, '-poster');
   res.status(200).json(concert);
 };
 
