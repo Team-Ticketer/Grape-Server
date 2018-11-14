@@ -1,4 +1,5 @@
 const axios = require('axios');
+const mongoose = require('mongoose');
 const Concert = require('../../models/Concert');
 
 const postConcert = async function postConcert(req, res) {
@@ -62,8 +63,15 @@ const getConcertList = async function getConcertList(req, res) {
 
 const getConcertDetail = async function getConcertDetail(req, res) {
   const { id } = req.params;
-  const concert = await Concert.findById(id, '-poster');
-  res.status(200).json(concert);
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(405).json({ result: 'BAD', msg: 'Invalid id' });
+  try {
+    const concert = await Concert.findById(id, '-poster');
+    if (!concert) return res.status(404).json({ result: 'BAD', msg: 'Not Found' });
+    return res.status(200).json(concert);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ result: 'BAD' });
+  }
 };
 
 module.exports = {
