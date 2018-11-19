@@ -10,8 +10,6 @@ const Concert = new mongoose.Schema({
   poster: String,
   address: String,
   placeName: String,
-  lat: Number,
-  lng: Number,
   startDate: Date,
   endDate: Date,
   owner: {
@@ -19,12 +17,6 @@ const Concert = new mongoose.Schema({
     email: String,
     description: String,
   },
-  tickets: [{
-    name: String,
-    description: String,
-    amount: Number,
-    price: Number,
-  }],
 });
 
 module.exports = mongoose.model('Concert', Concert);

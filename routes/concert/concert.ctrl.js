@@ -2,10 +2,11 @@ const axios = require('axios');
 const mongoose = require('mongoose');
 const Concert = require('../../models/Concert');
 
+// FIXME: 느린거 같아요
 const postConcert = async function postConcert(req, res) {
   const {
     contract, name, artist, content, video, address,
-    lat, lng, startDate, endDate, ownerName, ownerEmail, ownerDes, tickets,
+    startDate, endDate, ownerName, ownerEmail, ownerDes,
   } = req.body;
 
   const place = (await axios({
@@ -29,8 +30,6 @@ const postConcert = async function postConcert(req, res) {
     picture: `${req.protocol}://${req.hostname}/public/uploads/${req.files[0].filename}`,
     poster: `${req.protocol}://${req.hostname}/public/uploads/${req.files[1].filename}`,
     address,
-    lat,
-    lng,
     startDate,
     endDate,
     owner: {
@@ -38,7 +37,6 @@ const postConcert = async function postConcert(req, res) {
       email: ownerEmail,
       description: ownerDes,
     },
-    tickets: JSON.parse(tickets),
   });
 
   newConcert.save()
@@ -49,15 +47,16 @@ const postConcert = async function postConcert(req, res) {
     });
 };
 
+// FIXME: 쿼리 잘 되는지 확인하기
 const getConcertList = async function getConcertList(req, res) {
   const query = {};
 
-  // lte and gte 사용해서 $date 비교하기
+  // FIXME: lte and gte 사용해서 $date 비교하기
   Object.keys(req.query).forEach((k) => {
     query[k] = new RegExp(req.query[k], 'i');
   });
 
-  const concerts = await Concert.find(query, 'poster name startDate endDate minPrice maxPrice');
+  const concerts = await Concert.find(query, 'poster name startDate endDate');
   res.status(200).json(concerts);
 };
 
