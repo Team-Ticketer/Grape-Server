@@ -8,10 +8,7 @@ const checkWallet = function checkWalletWithKaKaoId(req, res) {
    */
   const { kakaoId } = req.query;
   User.findOne({ kakaoId })
-    .then((u) => {
-      if (u) res.status(200).json({ result: 'OK', isExist: true });
-      else res.status(200).json({ result: 'OK', isExist: false });
-    })
+    .then(u => res.status(200).json({ result: 'OK', isExist: Boolean(u) }))
     .catch((e) => {
       console.log(e);
       res.status(500).json({ result: 'BAD' });
